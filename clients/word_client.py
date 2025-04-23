@@ -21,5 +21,5 @@ class WordClient:
 
         self.doc.add_paragraph()
 
-    def save(self) -> None:
-        self.doc.save(self.doc_name)
+    def save(self, doc_name: str) -> None:
+        self.doc.save(doc_name)

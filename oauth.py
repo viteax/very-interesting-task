@@ -1,9 +1,9 @@
-# import json
-
 import requests
 import requests.auth
 
 from config import Config, load_config
+
+# Get your keys at https://stepik.org/oauth2/applications/
 
 config: Config = load_config()
 
@@ -26,14 +26,6 @@ session = requests.session()
 session.headers = {"Authorization": f"Bearer {token}"}
 
 API_URL = "https://stepik.org/api"
+
 # docs = session.get(f"{api_url}/docs/api-docs")
 # print(json.dumps(docs.json(), indent=2))
-
-# endpoint = "0"
-# while endpoint:
-#     endpoint = input()
-#     temp = session.get(f"{api_url}{endpoint}")
-#     print(json.dumps(temp.json(), indent=2))
-
-
-# print("Return 0")

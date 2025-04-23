@@ -4,9 +4,10 @@ from PIL import Image, ImageDraw, ImageFont
 from clients.client import Client
 from models import CodeProblem, CodeSolution
 
-DIFF = 50
+PADDING = 20
 FONT_SIZE = 24
 PICS_PATH = "pics"
+FONT_PATH = "assets/JetBrainsMono-Regular.ttf"
 
 
 def save_code_picture(path_to_pic: str, code_str: str) -> None:
@@ -15,22 +16,24 @@ def save_code_picture(path_to_pic: str, code_str: str) -> None:
     img = Image.new("RGB", (500, 500))
     d = ImageDraw.Draw(img)
 
-    font = ImageFont.truetype("assets/JetBrainsMono-Regular.ttf", FONT_SIZE)
+    font = ImageFont.truetype(FONT_PATH, FONT_SIZE)
 
     code_str = code_str.strip()
     box_size = d.textbbox(
-        (20, 20),
+        (PADDING, PADDING),
         code_str,
         font=font,
     )
     line_length = box_size[2]
     line_height = box_size[3]
 
-    img = Image.new("RGB", (line_length + DIFF, line_height + 20), (255, 255, 255))
+    img = Image.new(
+        "RGB", (line_length + PADDING, line_height + PADDING), (255, 255, 255)
+    )
     d = ImageDraw.Draw(img)
 
     d.text(
-        (20, 20),
+        (PADDING, PADDING),
         code_str,
         fill=(0, 0, 0),
         font=font,

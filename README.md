@@ -15,3 +15,9 @@
 Окей, вот как я решил справиться с этой проблемой.
 
 # Как запустить?
+
+Бро, качаешь uv'шечку https://docs.astral.sh/uv/getting-started/installation/,
+клонируешь репу себе: git clone https://github.com/viteax/very-interesting-task.git,
+Залетаешь в репу, прописываешь: uv sync, запускаешься из main.py и готово!
+
+Скажем нет адской боли!

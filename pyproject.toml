@@ -1,0 +1,15 @@
+[project]
+name = "very-interesting-task"
+version = "1.0.0"
+description = "This program solves veeeeeery interesting task"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "beautifulsoup4>=4.13.4",
+    "environs>=14.1.1",
+    "pillow>=11.2.1",
+    "pydantic>=2.11.3",
+    "pytest>=8.3.5",
+    "python-docx>=1.1.2",
+    "requests>=2.32.3",
+]

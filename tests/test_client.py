@@ -1,6 +1,25 @@
+import pytest
 from bs4 import BeautifulSoup
 
 from clients.stepik import StepikClient
+
+
+def test_get_lessons_ids():
+    stepik = StepikClient()
+    lessons_ids = stepik.get_lessons_ids(
+        course_id=58852,
+        section_no=1,
+    )
+    assert lessons_ids == [290248, 363342, 1086413, 1602702]
+
+
+def test_get_lessons_ids_invalid():
+    stepik = StepikClient()
+    with pytest.raises(IndexError):
+        stepik.get_lessons_ids(
+            course_id=58852,
+            section_no=17,
+        )
 
 
 def test_client():

@@ -5,6 +5,7 @@ from clients.word import WordClient
 from logic import IMGS_PATH, get_code_solutions
 
 TEMPLATE_PATH = "assets/template.docx"
+PYTHON_COURSE_ID = 58852
 
 
 def main():
@@ -13,9 +14,12 @@ def main():
     doc = WordClient(doc_path=TEMPLATE_PATH)
     stepik = StepikClient()
 
-    course_id = int(input("Введите id курса: "))
-    section_no = int(input("Введите номер секции: "))
-    doc_name = input("Сохранить как: ")
+    course_id = int(input("Введите id курса: ") or PYTHON_COURSE_ID)
+    section_no = int(input("Введите номер раздела: "))
+
+    section = stepik.get_section(stepik.get_section_id(course_id, section_no))
+    doc_name = input("Сохранить как: ") or f"{section_no}-{section.title}"
+
     current_no = 1
     heading_no = 1
 

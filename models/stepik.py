@@ -67,6 +67,7 @@ class CoursesResponse(BaseModel):
 class Section(BaseModel):
     id: int
     units: list[int]
+    title: str
 
 
 class SectionsResponse(BaseModel):

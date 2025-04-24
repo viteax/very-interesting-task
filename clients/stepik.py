@@ -15,23 +15,26 @@ class StepikClient:
     def __init__(self):
         self.session = get_session()
 
+    def get_section_id(self, course_id: int, section_no: int) -> int:
+        resp = self.session.get(f"{API_URL}/courses/{course_id}")
+        course_resp = CoursesResponse.model_validate(resp.json())
+        sections_ids = course_resp.courses[0].sections
+        if not (0 < section_no <= len(sections_ids)):
+            raise IndexError("Секции с таким номером не существует")
+        return sections_ids[section_no - 1]
+
+    def get_section(self, id: int):
+        resp = self.session.get(f"{API_URL}/sections/{id}")
+        section_resp = SectionsResponse.model_validate(resp.json())
+        return section_resp.sections[0]
+
     def get_lesson(self, id: int) -> Lesson:
         resp = self.session.get(f"{API_URL}/lessons/{id}")
         lesson_resp = LessonResponse.model_validate(resp.json())
         return Lesson.model_validate(lesson_resp.lessons[0])
 
     def get_lessons(self, course_id: int, section_no: int) -> list[Lesson]:
-        resp = self.session.get(f"{API_URL}/courses/{course_id}")
-        course_resp = CoursesResponse.model_validate(resp.json())
-        sections_ids = course_resp.courses[0].sections
-        if not (0 < section_no <= len(sections_ids)):
-            raise IndexError("Секции с таким номером не существует")
-
-        section_id = sections_ids[section_no - 1]
-        resp = self.session.get(f"{API_URL}/sections/{section_id}")
-        section_resp = SectionsResponse.model_validate(resp.json())
-        section = section_resp.sections[0]
-
+        section = self.get_section(self.get_section_id(course_id, section_no))
         lessons = []
         for unit_id in section.units:
             resp = self.session.get(f"{API_URL}/units/{unit_id}")

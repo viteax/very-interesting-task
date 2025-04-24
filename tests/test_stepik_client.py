@@ -1,7 +1,7 @@
 import pytest
-from bs4 import BeautifulSoup
 
 from clients.stepik import StepikClient
+from models.stepik import Block, Step
 
 
 def test_get_lessons():
@@ -23,29 +23,14 @@ def test_get_lessons_ids_invalid():
         )
 
 
-def test_client():
+def test_get_step():
     stepik = StepikClient()
-    lesson = stepik.get_lesson(id=265121)
-    step = stepik.get_step(id=lesson.steps[-1])
+    step = stepik.get_step(1010120)
 
-    print()
-    print(lesson)
-    print()
-    print(step)
-    print()
-
-    descr = step.block.text
-    soup = BeautifulSoup(descr, "html.parser")
-    # problem_name = soup.h2.text
-    problem_descr = []
-    for p in soup.find_all("p"):
-        text: str = p.text
-        if text.startswith("Формат входных данных"):
-            break
-        problem_descr.append(text)
-    print(soup.h2.text)
-    print(*problem_descr, sep="\n")
-
-    print(stepik.get_solution_code(step_id=lesson.steps[-1]))
-
-    assert 1 == 1
+    assert step == Step(
+        id=1010120,
+        block=Block(
+            name="code",
+            text='<h2 style="text-align:center;">Звёздный прямоугольник</h2>\n\n<p>Напишите программу, которая выводит прямоугольник,&nbsp;по периметру состоящий из звёздочек (<code>*</code>).</p>\n\n<p><strong>Примечание.</strong>&nbsp;Высота и ширина прямоугольника равны $4$ и $17$ звёздочкам соответственно.</p>',
+        ),
+    )

@@ -1,12 +1,16 @@
+import os
+
 from PIL import Image
 
-from logic import PICS_PATH, parse_block_text, save_code_picture
+from logic import IMGS_PATH, parse_block_text, save_code_picture
 
 
 def test_save_picture():
-    pic_path = f"{PICS_PATH}/test.png"
+    os.makedirs(IMGS_PATH, exist_ok=True)
 
-    save_code_picture(pic_path=pic_path, code_str="lmao")
+    pic_path = f"{IMGS_PATH}/test.png"
+
+    save_code_picture(pic_path=pic_path, code_str="lmao == gnome\nSkibidi")
     img = Image.open(pic_path)
 
     assert img

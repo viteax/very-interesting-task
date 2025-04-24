@@ -2,11 +2,11 @@ from bs4 import BeautifulSoup
 from PIL import Image, ImageDraw, ImageFont
 
 from clients.stepik import StepikClient
-from models import CodeProblem, CodeSolution
+from models.stepik import CodeProblem, CodeSolution
 
 PADDING = 20
 FONT_SIZE = 24
-PICS_PATH = "pics"
+PICS_PATH = "images"
 FONT_PATH = "assets/JetBrainsMono-Regular.ttf"
 
 

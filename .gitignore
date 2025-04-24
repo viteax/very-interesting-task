@@ -13,7 +13,7 @@ wheels/
 .pytest_cache/
 
 # Program-generated files
-pics/
+images/
 
 .env
 .vscode

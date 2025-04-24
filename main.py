@@ -1,11 +1,11 @@
 from clients.word import WordClient
 from logic import get_code_solutions
 
-PATH_TEMPLATE = "assets/template.docx"
+TEMPLATE_PATH = "assets/template.docx"
 
 
 def main():
-    doc = WordClient(doc_name=PATH_TEMPLATE)
+    doc = WordClient(doc_name=TEMPLATE_PATH)
 
     lesson_id = input("Введите id урока: ")
     current_no = int(input("Начать с номера: "))

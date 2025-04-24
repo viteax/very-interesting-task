@@ -1,7 +1,7 @@
 import requests
 import requests.auth
 
-from config import Config, load_config
+from models.config import Config, load_config
 
 # Get your keys at https://stepik.org/oauth2/applications/
 

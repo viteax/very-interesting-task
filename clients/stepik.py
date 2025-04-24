@@ -1,4 +1,4 @@
-from models import Lesson, LessonResponse, Step, StepResponse, SubmissionResponse
+from models.stepik import Lesson, LessonResponse, Step, StepResponse, SubmissionResponse
 from oauth import API_URL, session
 
 

@@ -61,7 +61,14 @@ def get_code_solutions(lesson_id: int) -> list[CodeSolution]:
         if step.block.name == "code":
             code_problem = parse_block_text(step.block.text)
             code_str = client.get_solution_code(step_id=step_id)
-            img_path = f"{IMGS_PATH}/{code_problem.title}.png"
+
+            title = "".join(
+                symb
+                for symb in code_problem.title
+                if symb not in ("\\", "/", ":", "*", "?", '"', "<", ">", "|")
+            )
+            img_path = f"{IMGS_PATH}/{title}.png"
+
             save_code_picture(img_path=img_path, code_str=code_str)
             code_solutions.append(
                 CodeSolution(

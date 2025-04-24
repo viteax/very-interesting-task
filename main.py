@@ -17,11 +17,14 @@ def main():
     section_no = int(input("Введите номер секции: "))
     doc_name = input("Сохранить как: ")
     current_no = 1
+    heading_no = 1
 
     lessons = stepik.get_lessons(course_id, section_no)
-    for heading_no, lesson in enumerate(lessons, start=1):
-        doc.add_heading2(lesson.title, heading_no=heading_no)
+    for lesson in lessons:
         code_solutions = get_code_solutions(lesson_id=lesson.id)
+        if not code_solutions:
+            continue
+        doc.add_heading2(lesson.title, heading_no=heading_no)
         for solution in code_solutions:
             doc.add_solution(
                 no=current_no,
@@ -31,6 +34,7 @@ def main():
             )
             current_no += 1
         doc.add_page_break()
+        heading_no += 1
 
     doc.save(doc_name=doc_name)
 

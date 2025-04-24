@@ -50,4 +50,34 @@ class SubmissionResponse(BaseModel):
 class CodeSolution(BaseModel):
     title: str
     description: list[str]
-    pic_path: str
+    img_path: str
+
+
+class Course(BaseModel):
+    id: int
+    sections: list[int]
+
+
+class CoursesResponse(BaseModel):
+    meta: dict
+    courses: list[Course]
+
+
+class Section(BaseModel):
+    id: int
+    units: list[int]
+
+
+class SectionsResponse(BaseModel):
+    meta: dict
+    sections: list[Section]
+
+
+class Unit(BaseModel):
+    id: int
+    lesson: int
+
+
+class UnitsResponse(BaseModel):
+    meta: dict
+    units: list[Unit]

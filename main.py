@@ -1,4 +1,4 @@
-from clients.word_client import WordClient
+from clients.word import WordClient
 from logic import get_code_solutions
 
 PATH_TEMPLATE = "assets/template.docx"
@@ -17,7 +17,7 @@ def main():
             no=current_no,
             title=solution.title,
             descr="\n".join(solution.description),
-            pic_path=solution.path_to_pic,
+            pic_path=solution.pic_path,
         )
         current_no += 1
 

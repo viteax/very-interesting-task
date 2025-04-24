@@ -1,12 +1,12 @@
 from bs4 import BeautifulSoup
 
-from clients.client import Client
+from clients.stepik import StepikClient
 
 
 def test_client():
-    client = Client()
-    lesson = client.get_lesson(id=265121)
-    step = client.get_step(id=lesson.steps[-1])
+    stepik = StepikClient()
+    lesson = stepik.get_lesson(id=265121)
+    step = stepik.get_step(id=lesson.steps[-1])
 
     print()
     print(lesson)
@@ -26,6 +26,6 @@ def test_client():
     print(soup.h2.text)
     print(*problem_descr, sep="\n")
 
-    print(client.get_solution_code(step_id=lesson.steps[-1]))
+    print(stepik.get_solution_code(step_id=lesson.steps[-1]))
 
     assert 1 == 1

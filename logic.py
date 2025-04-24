@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 from PIL import Image, ImageDraw, ImageFont
 
-from clients.client import Client
+from clients.stepik import StepikClient
 from models import CodeProblem, CodeSolution
 
 PADDING = 20
@@ -10,7 +10,7 @@ PICS_PATH = "pics"
 FONT_PATH = "assets/JetBrainsMono-Regular.ttf"
 
 
-def save_code_picture(path_to_pic: str, code_str: str) -> None:
+def save_code_picture(pic_path: str, code_str: str) -> None:
     """Saves picture"""
 
     img = Image.new("RGB", (500, 500))
@@ -38,7 +38,7 @@ def save_code_picture(path_to_pic: str, code_str: str) -> None:
         fill=(0, 0, 0),
         font=font,
     )
-    img.save(path_to_pic, "PNG")
+    img.save(pic_path, "PNG")
 
 
 def parse_block_text(html_text: str) -> CodeProblem:
@@ -56,7 +56,7 @@ def parse_block_text(html_text: str) -> CodeProblem:
 
 
 def get_code_solutions(lesson_id: int) -> list[CodeSolution]:
-    client = Client()
+    client = StepikClient()
 
     lesson = client.get_lesson(id=lesson_id)
     code_solutions = []
@@ -66,12 +66,12 @@ def get_code_solutions(lesson_id: int) -> list[CodeSolution]:
             code_problem = parse_block_text(step.block.text)
             code_str = client.get_solution_code(step_id=step_id)
             path_to_pic = f"{PICS_PATH}/{code_problem.title}.png"
-            save_code_picture(path_to_pic=path_to_pic, code_str=code_str)
+            save_code_picture(pic_path=path_to_pic, code_str=code_str)
             code_solutions.append(
                 CodeSolution(
                     title=code_problem.title,
                     description=code_problem.description,
-                    path_to_pic=path_to_pic,
+                    pic_path=path_to_pic,
                 )
             )
 

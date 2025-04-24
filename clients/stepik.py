@@ -2,7 +2,7 @@ from models import Lesson, LessonResponse, Step, StepResponse, SubmissionRespons
 from oauth import API_URL, session
 
 
-class Client:
+class StepikClient:
     def get_lesson(self, id: int) -> Lesson:
         resp = session.get(f"{API_URL}/lessons/{id}")
         lesson_resp = LessonResponse.model_validate(resp.json())

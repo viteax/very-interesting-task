@@ -50,4 +50,4 @@ class SubmissionResponse(BaseModel):
 class CodeSolution(BaseModel):
     title: str
     description: list[str]
-    path_to_pic: str
+    pic_path: str

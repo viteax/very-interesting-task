@@ -6,16 +6,15 @@ from models.stepik import CodeProblem, CodeSolution
 
 PADDING = 20
 FONT_SIZE = 24
-PICS_PATH = "images"
 FONT_PATH = "assets/JetBrainsMono-Regular.ttf"
+IMGS_PATH = "images"
 
 
 def save_code_picture(pic_path: str, code_str: str) -> None:
     """Saves picture"""
 
-    img = Image.new("RGB", (500, 500))
+    img = Image.new("RGB", (1, 1), (255, 255, 255))
     d = ImageDraw.Draw(img)
-
     font = ImageFont.truetype(FONT_PATH, FONT_SIZE)
 
     code_str = code_str.strip()
@@ -27,11 +26,8 @@ def save_code_picture(pic_path: str, code_str: str) -> None:
     line_length = box_size[2]
     line_height = box_size[3]
 
-    img = Image.new(
-        "RGB", (line_length + PADDING, line_height + PADDING), (255, 255, 255)
-    )
+    img = img.resize((line_length + PADDING, line_height + PADDING))
     d = ImageDraw.Draw(img)
-
     d.text(
         (PADDING, PADDING),
         code_str,
@@ -65,7 +61,7 @@ def get_code_solutions(lesson_id: int) -> list[CodeSolution]:
         if step.block.name == "code":
             code_problem = parse_block_text(step.block.text)
             code_str = client.get_solution_code(step_id=step_id)
-            path_to_pic = f"{PICS_PATH}/{code_problem.title}.png"
+            path_to_pic = f"{IMGS_PATH}/{code_problem.title}.png"
             save_code_picture(pic_path=path_to_pic, code_str=code_str)
             code_solutions.append(
                 CodeSolution(

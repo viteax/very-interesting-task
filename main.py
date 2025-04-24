@@ -1,10 +1,14 @@
+import os
+
 from clients.word import WordClient
-from logic import get_code_solutions
+from logic import IMGS_PATH, get_code_solutions
 
 TEMPLATE_PATH = "assets/template.docx"
 
 
 def main():
+    os.makedirs(IMGS_PATH, exist_ok=True)
+
     doc = WordClient(doc_name=TEMPLATE_PATH)
 
     lesson_id = input("Введите id урока: ")

@@ -15,11 +15,11 @@ def main():
 
     course_id = int(input("Введите id курса: "))
     section_no = int(input("Введите номер секции: "))
-    current_no = int(input("Начать нумерацию с: "))
     doc_name = input("Сохранить как: ")
+    current_no = 1
 
     lessons = stepik.get_lessons(course_id, section_no)
-    for heading_no, lesson in enumerate(lessons):
+    for heading_no, lesson in enumerate(lessons, start=1):
         doc.add_heading2(lesson.title, heading_no=heading_no)
         code_solutions = get_code_solutions(lesson_id=lesson.id)
         for solution in code_solutions:

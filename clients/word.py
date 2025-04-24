@@ -35,4 +35,6 @@ class WordClient:
 
     def save(self, doc_name: str) -> None:
         os.makedirs("my_docs", exist_ok=True)
+        if not doc_name.endswith(".docx"):
+            doc_name += ".docx"
         self.doc.save(f"my_docs/{doc_name}")

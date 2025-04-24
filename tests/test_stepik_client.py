@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from clients.stepik import StepikClient
 
 
-def test_get_lessons_ids():
+def test_get_lessons():
     stepik = StepikClient()
     lessons = stepik.get_lessons(
         course_id=58852,

@@ -1,3 +1,5 @@
+import os
+
 from docx import Document
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
 
@@ -32,4 +34,5 @@ class WordClient:
         self.doc.add_page_break()
 
     def save(self, doc_name: str) -> None:
-        self.doc.save(f"assets/{doc_name}")
+        os.makedirs("my_docs", exist_ok=True)
+        self.doc.save(f"my_docs/{doc_name}")

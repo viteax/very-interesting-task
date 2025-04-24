@@ -4,6 +4,7 @@ from pydantic import BaseModel
 class Lesson(BaseModel):
     id: int
     steps: list[int]
+    title: str
 
 
 class LessonResponse(BaseModel):

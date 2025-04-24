@@ -12,7 +12,12 @@ from oauth import API_URL, session
 
 
 class StepikClient:
-    def get_lessons_ids(self, course_id: int, section_no: int) -> list[int]:
+    def get_lesson(self, id: int) -> Lesson:
+        resp = session.get(f"{API_URL}/lessons/{id}")
+        lesson_resp = LessonResponse.model_validate(resp.json())
+        return Lesson.model_validate(lesson_resp.lessons[0])
+
+    def get_lessons(self, course_id: int, section_no: int) -> list[Lesson]:
         resp = session.get(f"{API_URL}/courses/{course_id}")
         course_resp = CoursesResponse.model_validate(resp.json())
         sections_ids = course_resp.courses[0].sections
@@ -24,17 +29,12 @@ class StepikClient:
         section_resp = SectionsResponse.model_validate(resp.json())
         section = section_resp.sections[0]
 
-        lessons_ids = []
+        lessons = []
         for unit_id in section.units:
             resp = session.get(f"{API_URL}/units/{unit_id}")
             unit_resp = UnitsResponse.model_validate(resp.json())
-            lessons_ids.append(unit_resp.units[0].lesson)
-        return lessons_ids
-
-    def get_lesson(self, id: int) -> Lesson:
-        resp = session.get(f"{API_URL}/lessons/{id}")
-        lesson_resp = LessonResponse.model_validate(resp.json())
-        return Lesson.model_validate(lesson_resp.lessons[0])
+            lessons.append(self.get_lesson(unit_resp.units[0].lesson))
+        return lessons
 
     def get_step(self, id: int) -> Step:
         resp = session.get(f"{API_URL}/steps/{id}")

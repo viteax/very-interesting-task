@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 from PIL import Image, ImageDraw, ImageFont
 
 from clients.stepik import StepikClient
-from models.stepik import CodeProblem, CodeSolution
+from models.stepik import CodeProblem, CodeSolution, Lesson
 
 PADDING = 20
 FONT_SIZE = 24
@@ -51,10 +51,17 @@ def parse_block_text(html_text: str) -> CodeProblem:
     return CodeProblem(title=problem_title, description=problem_descriptions)
 
 
-def get_code_solutions(lesson_id: int) -> list[CodeSolution]:
+def legalize_title(title: str) -> str:
+    return "".join(
+        symb
+        for symb in title
+        if symb not in ("\\", "/", ":", "*", "?", '"', "<", ">", "|")
+    )
+
+
+def get_code_solutions(lesson: Lesson) -> list[CodeSolution]:
     client = StepikClient()
 
-    lesson = client.get_lesson(id=lesson_id)
     code_solutions = []
     for step_id in lesson.steps:
         step = client.get_step(id=step_id)
@@ -62,14 +69,10 @@ def get_code_solutions(lesson_id: int) -> list[CodeSolution]:
             code_problem = parse_block_text(step.block.text)
             code_str = client.get_solution_code(step_id=step_id)
 
-            title = "".join(
-                symb
-                for symb in code_problem.title
-                if symb not in ("\\", "/", ":", "*", "?", '"', "<", ">", "|")
-            )
+            title = legalize_title(code_problem.title)
             img_path = f"{IMGS_PATH}/{title}.png"
 
-            save_code_picture(img_path=img_path, code_str=code_str)
+            save_code_picture(img_path, code_str)
             code_solutions.append(
                 CodeSolution(
                     title=code_problem.title,

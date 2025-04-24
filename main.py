@@ -26,7 +26,7 @@ def main():
 
     lessons = stepik.get_lessons(course_id, section_no)
     for lesson in lessons:
-        code_solutions = get_code_solutions(lesson_id=lesson.id)
+        code_solutions = get_code_solutions(lesson)
         if not code_solutions:
             continue
         doc.add_heading2(lesson.title, heading_no=heading_no)

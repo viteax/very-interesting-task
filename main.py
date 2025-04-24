@@ -21,7 +21,7 @@ def main():
             no=current_no,
             title=solution.title,
             descr="\n".join(solution.description),
-            pic_path=solution.pic_path,
+            img_path=solution.img_path,
         )
         current_no += 1
 

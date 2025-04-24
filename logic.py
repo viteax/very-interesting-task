@@ -10,7 +10,7 @@ FONT_PATH = "assets/JetBrainsMono-Regular.ttf"
 IMGS_PATH = "images"
 
 
-def save_code_picture(pic_path: str, code_str: str) -> None:
+def save_code_picture(img_path: str, code_str: str) -> None:
     """Saves picture"""
 
     img = Image.new("RGB", (1, 1), (255, 255, 255))
@@ -34,7 +34,7 @@ def save_code_picture(pic_path: str, code_str: str) -> None:
         fill=(0, 0, 0),
         font=font,
     )
-    img.save(pic_path, "PNG")
+    img.save(img_path, "PNG")
 
 
 def parse_block_text(html_text: str) -> CodeProblem:
@@ -61,13 +61,13 @@ def get_code_solutions(lesson_id: int) -> list[CodeSolution]:
         if step.block.name == "code":
             code_problem = parse_block_text(step.block.text)
             code_str = client.get_solution_code(step_id=step_id)
-            path_to_pic = f"{IMGS_PATH}/{code_problem.title}.png"
-            save_code_picture(pic_path=path_to_pic, code_str=code_str)
+            img_path = f"{IMGS_PATH}/{code_problem.title}.png"
+            save_code_picture(img_path=img_path, code_str=code_str)
             code_solutions.append(
                 CodeSolution(
                     title=code_problem.title,
                     description=code_problem.description,
-                    pic_path=path_to_pic,
+                    img_path=img_path,
                 )
             )
 

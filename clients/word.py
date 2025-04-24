@@ -7,13 +7,13 @@ class WordClient:
         self.doc_name = doc_name
         self.doc = Document(docx=doc_name)
 
-    def add_solution(self, no: int, title: str, descr: str, pic_path: str) -> None:
+    def add_solution(self, no: int, title: str, descr: str, img_path: str) -> None:
         self.doc.add_paragraph(f'"{title}"')
         self.doc.add_paragraph(f"{descr}")
         self.doc.add_paragraph()
 
         pic_p = self.doc.add_paragraph()
-        pic_p.add_run().add_picture(pic_path)
+        pic_p.add_run().add_picture(img_path)
         pic_p.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
 
         label = self.doc.add_paragraph(f'Рисунок 2.{no} — решение задачи "{title}".')

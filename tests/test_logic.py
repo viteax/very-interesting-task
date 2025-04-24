@@ -10,7 +10,7 @@ def test_save_picture():
 
     pic_path = f"{IMGS_PATH}/test.png"
 
-    save_code_picture(pic_path=pic_path, code_str="lmao == gnome\nSkibidi")
+    save_code_picture(img_path=pic_path, code_str="lmao == gnome\nSkibidi")
     img = Image.open(pic_path)
 
     assert img

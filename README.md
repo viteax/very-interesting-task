@@ -17,7 +17,15 @@
 # Как запустить?
 
 Бро, качаешь uv'шечку https://docs.astral.sh/uv/getting-started/installation/,
-клонируешь репу себе: git clone https://github.com/viteax/very-interesting-task.git,
-Залетаешь в репу, прописываешь: uv sync, запускаешься из main.py и готово!
+
+1. pip install uv
+2. git clone https://github.com/viteax/very-interesting-task.git
+3. cd very-interesting-task
+4. uv sync
+5. Создаешь приложение на https://stepik.org/oauth2/applications/, client-type: confidential,
+grant-type: client-credentials.
+6. cp .env.example .env
+7. Открыть .env, вставить значения client_id и client_secret в соответствующие поля.
+8. uv run main.py
 
 Скажем нет адской боли!

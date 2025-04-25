@@ -37,8 +37,11 @@ def save_code_picture(img_path: str, code_str: str) -> None:
     img.save(img_path, "PNG")
 
 
-def parse_block_text(html_text: str) -> CodeProblem:
+def parse_block_text(html_text: str) -> CodeProblem | None:
     soup = BeautifulSoup(html_text, "html.parser")
+    if not soup.h2:
+        return None
+
     problem_title: str = soup.h2.text
     problem_descriptions = []
     for p in soup.find_all("p"):
@@ -60,27 +63,31 @@ def legalize_title(title: str) -> str:
 
 
 def get_code_solutions(lesson: Lesson) -> list[CodeSolution]:
-    client = StepikClient()
+    stepik = StepikClient()
 
     code_solutions = []
     for step_id in lesson.steps:
-        step = client.get_step(id=step_id)
-        if step.block.name == "code":
-            code_problem = parse_block_text(step.block.text)
-            code_str = client.get_solution_code(step_id=step_id)
+        step = stepik.get_step(id=step_id)
+        if step.block.name != "code":
+            continue
 
-            title = legalize_title(code_problem.title)
-            img_path = f"{IMGS_PATH}/{title}.png"
+        code_problem = parse_block_text(step.block.text)
+        if not code_problem:
+            continue
 
-            save_code_picture(img_path, code_str)
-            code_solutions.append(
-                CodeSolution(
-                    title=code_problem.title,
-                    description=code_problem.description,
-                    img_path=img_path,
-                )
+        code_str = stepik.get_solution_code(step_id=step_id)
+
+        title = legalize_title(code_problem.title)
+        img_path = f"{IMGS_PATH}/{title}.png"
+
+        save_code_picture(img_path, code_str)
+        code_solutions.append(
+            CodeSolution(
+                title=code_problem.title,
+                description=code_problem.description,
+                img_path=img_path,
             )
-
+        )
     return code_solutions
 
 

@@ -47,10 +47,10 @@ class StepikClient:
         step_resp = StepResponse.model_validate(resp.json())
         return step_resp.steps[0]
 
-    def get_solution_code(self, step_id: int) -> str:
+    def get_solution_code(self, step_id: int) -> str | None:
         resp = self.session.get(f"{API_URL}/submissions?step={step_id}")
         submission_resp = SubmissionResponse.model_validate(resp.json())
         for submission in reversed(submission_resp.submissions):
             if submission.status == "correct":
                 return submission.reply.code
-        return "Error, no correct ones"
+        return None

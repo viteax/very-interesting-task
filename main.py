@@ -14,12 +14,15 @@ def main():
     doc = WordClient(doc_path=TEMPLATE_PATH)
     stepik = StepikClient()
 
-    course_id = int(input("Введите id курса: ") or PYTHON_COURSE_ID)
-    section_no = int(input("Введите номер раздела: "))
-    doc_name = input("Сохранить как: ")
+    # course_id = int(input("Введите id курса: ") or PYTHON_COURSE_ID)
+    course_id = PYTHON_COURSE_ID
+    section_no = int(input("Введите номер раздела (номер лабы): "))
+    print("Пошла жара ...")
+    # doc_name = input("Сохранить как: ")
+    doc_name = ""
     if not doc_name:
         section = stepik.get_section(stepik.get_section_id(course_id, section_no))
-        doc_name = f"{section_no}-{section.title}"
+        doc_name = f"{section_no}-{section.title.strip().replace(' ', '-')}"
 
     current_no = 1
     heading_no = 1

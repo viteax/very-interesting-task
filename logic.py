@@ -76,6 +76,8 @@ def get_code_solutions(lesson: Lesson) -> list[CodeSolution]:
             continue
 
         code_str = stepik.get_solution_code(step_id=step_id)
+        if not code_str:
+            continue
 
         title = legalize_title(code_problem.title)
         img_path = f"{IMGS_PATH}/{title}.png"

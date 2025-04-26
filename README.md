@@ -28,8 +28,7 @@
 
 Прошу, преподробнейший гайд:
 
-1. `pip install uv`
-[гайд по установке](https://docs.astral.sh/uv/getting-started/installation/)
+1. `pip install uv`, [гайд по установке uv](https://docs.astral.sh/uv/getting-started/installation/).
 2. `git clone https://github.com/viteax/very-interesting-task.git`
 3. `cd very-interesting-task`
 4. `uv sync`

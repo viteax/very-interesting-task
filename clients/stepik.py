@@ -1,3 +1,5 @@
+import logging
+
 from models.stepik import (
     CoursesResponse,
     Lesson,
@@ -9,6 +11,8 @@ from models.stepik import (
     UnitsResponse,
 )
 from oauth import API_URL, get_session
+
+logger = logging.getLogger(__name__)
 
 
 class StepikClient:

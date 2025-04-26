@@ -1,4 +1,7 @@
+import logging
 import os
+
+import coloredlogs
 
 from clients.stepik import StepikClient
 from clients.word import WordClient
@@ -7,18 +10,20 @@ from logic import IMGS_PATH, get_code_solutions
 TEMPLATE_PATH = "assets/template.docx"
 PYTHON_COURSE_ID = 58852
 
+logger = logging.getLogger(__name__)
+
+coloredlogs.install(level="DEBUG")
+
 
 def main():
+    logger.info("Start")
     os.makedirs(IMGS_PATH, exist_ok=True)
 
     doc = WordClient(doc_path=TEMPLATE_PATH)
     stepik = StepikClient()
 
-    # course_id = int(input("Введите id курса: ") or PYTHON_COURSE_ID)
     course_id = PYTHON_COURSE_ID
     section_no = int(input("Введите номер раздела (номер лабы): "))
-    print("Пошла жара ...")
-    # doc_name = input("Сохранить как: ")
     doc_name = ""
     if not doc_name:
         section = stepik.get_section(stepik.get_section_id(course_id, section_no))
@@ -31,6 +36,7 @@ def main():
     for lesson in lessons:
         code_solutions = get_code_solutions(lesson)
         if not code_solutions:
+            logger.warning(f"No any solutions for «{lesson.title}»\n")
             continue
         doc.add_heading2(lesson.title, heading_no=heading_no)
         for solution in code_solutions:
@@ -45,7 +51,13 @@ def main():
         heading_no += 1
 
     doc.save(doc_name=doc_name)
+    print(f"Документ {doc_name}.docx готов.")
+    print("(он находится в папке my_docs)")
 
 
 if __name__ == "__main__":
     main()
+    # Command for finding out info about authors written lines
+    # git log --pretty=format:==%an --numstat | \
+    # sed -r '/==.*/{s/^==//;h;D};/^$/D;s/-/0/g;s/\t[^\t]+$//;G;s/(.*)\n(.*)/\2\t\1/' \
+    # | awk -F '\t' '{add[$1]+=$2;del[$1]+=$3} END {for (i in add) {print i,add[i],del[i]}}'

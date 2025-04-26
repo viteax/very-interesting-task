@@ -1,3 +1,5 @@
+import logging
+
 from bs4 import BeautifulSoup
 from PIL import Image, ImageDraw, ImageFont
 
@@ -8,6 +10,8 @@ PADDING = 20
 FONT_SIZE = 24
 FONT_PATH = "assets/JetBrainsMono-Regular.ttf"
 IMGS_PATH = "images"
+
+logger = logging.getLogger(__name__)
 
 
 def save_code_picture(img_path: str, code_str: str) -> None:
@@ -63,6 +67,7 @@ def legalize_title(title: str) -> str:
 
 
 def get_code_solutions(lesson: Lesson) -> list[CodeSolution]:
+    logger.info(f"Getting code solutions «{lesson.title}»\n")
     stepik = StepikClient()
 
     code_solutions = []

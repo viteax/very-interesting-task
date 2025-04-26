@@ -16,8 +16,7 @@ logger = logging.getLogger(__name__)
 
 
 class StepikClient:
-    def __init__(self):
-        self.session = get_session()
+    session = get_session()
 
     def get_section_id(self, course_id: int, section_no: int) -> int:
         resp = self.session.get(f"{API_URL}/courses/{course_id}")

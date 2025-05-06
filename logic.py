@@ -6,8 +6,8 @@ from PIL import Image, ImageDraw, ImageFont
 from clients.stepik import StepikClient
 from models.stepik import CodeProblem, CodeSolution, Lesson
 
-PADDING = 20
-FONT_SIZE = 24
+PADDING = 0
+FONT_SIZE = 64
 FONT_PATH = "assets/JetBrainsMono-Regular.ttf"
 IMGS_PATH = "images"
 

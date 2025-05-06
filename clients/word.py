@@ -2,6 +2,9 @@ import os
 
 from docx import Document
 from docx.enum.text import WD_PARAGRAPH_ALIGNMENT
+from docx.shared import Cm
+
+PAGE_WIDTH_CM = 15.25
 
 
 class WordClient:
@@ -22,7 +25,7 @@ class WordClient:
         self.doc.add_paragraph()
 
         pic_p = self.doc.add_paragraph()
-        pic_p.add_run().add_picture(img_path)
+        pic_p.add_run().add_picture(img_path, width=Cm(PAGE_WIDTH_CM))
         pic_p.alignment = WD_PARAGRAPH_ALIGNMENT.CENTER
 
         label = self.doc.add_paragraph(f"Рисунок 2.{no} — решение задачи «{title}».")

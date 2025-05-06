@@ -19,7 +19,6 @@ def main():
     logger.info("Start")
     os.makedirs(IMGS_PATH, exist_ok=True)
 
-    doc = WordClient(doc_path=TEMPLATE_PATH)
     stepik = StepikClient()
 
     course_id = PYTHON_COURSE_ID
@@ -31,6 +30,11 @@ def main():
 
     current_no = 1
     heading_no = 1
+
+    custom_template_path = f"assets/{section_no}-template.docx"
+    doc = WordClient(TEMPLATE_PATH)
+    if os.path.isfile(custom_template_path):
+        doc = WordClient(doc_path=custom_template_path)
 
     lessons = stepik.get_lessons(course_id, section_no)
     for lesson in lessons:

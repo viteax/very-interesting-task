@@ -9,7 +9,6 @@ PAGE_WIDTH_CM = 15.25
 
 class WordClient:
     def __init__(self, doc_path: str):
-        self.doc_name = doc_path
         self.doc = Document(docx=doc_path)
 
     def add_heading2(self, title: str, heading_no: int) -> None:

@@ -29,7 +29,7 @@ class StepResponse(BaseModel):
 
 class CodeProblem(BaseModel):
     title: str
-    description: list[str]
+    description: str
 
 
 class Reply(BaseModel):
@@ -50,7 +50,7 @@ class SubmissionResponse(BaseModel):
 
 class CodeSolution(BaseModel):
     title: str
-    description: list[str]
+    description: str
     img_path: str
 
 

@@ -11,6 +11,10 @@ class WordClient:
     def __init__(self, doc_path: str):
         self.doc = Document(docx=doc_path)
 
+    def add_heading1(self, title: str) -> None:
+        self.doc.add_heading(title, level=1)
+        self.doc.add_paragraph()
+
     def add_heading2(self, title: str, heading_no: int) -> None:
         self.doc.add_heading(
             f"2.{heading_no}. Решения задач на тему «{title}»",

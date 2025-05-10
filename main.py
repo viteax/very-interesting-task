@@ -42,19 +42,22 @@ def main():
         if not code_solutions:
             logger.warning(f"No any solutions for «{lesson.title}»\n")
             continue
+
         doc.add_heading2(lesson.title, heading_no=heading_no)
         for solution in code_solutions:
             doc.add_solution(
                 no=current_no,
                 title=solution.title,
-                descr="\n".join(solution.description),
+                descr=solution.description,
                 img_path=solution.img_path,
             )
             current_no += 1
         doc.add_page_break()
         heading_no += 1
 
+    doc.add_heading1("Заключение")
     doc.save(doc_name=doc_name)
+
     print(f"Документ {doc_name}.docx готов.")
     print("(он находится в папке my_docs)")
 

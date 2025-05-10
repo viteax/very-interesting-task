@@ -41,6 +41,14 @@ def save_code_picture(img_path: str, code_str: str) -> None:
     img.save(img_path, "PNG")
 
 
+def legalize_title(title: str) -> str:
+    return "".join(
+        symb
+        for symb in title
+        if symb not in ("\\", "/", ":", "*", "?", '"', "<", ">", "|")
+    )
+
+
 def parse_block_text(html_text: str) -> CodeProblem | None:
     soup = BeautifulSoup(html_text, "html.parser")
     if not soup.h2:
@@ -52,17 +60,17 @@ def parse_block_text(html_text: str) -> CodeProblem | None:
         text: str = p.text
         if text.startswith("Формат входных данных"):
             break
+        text = text.replace("_", "")
+        text = text.replace("$", "")
+        text = text.replace("\\", "")
         problem_descriptions.append(text.replace("\xa0", " "))
 
     problem_title = problem_title.replace("\xa0", " ")
-    return CodeProblem(title=problem_title, description=problem_descriptions)
-
-
-def legalize_title(title: str) -> str:
-    return "".join(
-        symb
-        for symb in title
-        if symb not in ("\\", "/", ":", "*", "?", '"', "<", ">", "|")
+    problem_title = problem_title.replace("\n", " ")
+    problem_title = problem_title.replace("&nbsp;", " ")
+    return CodeProblem(
+        title=legalize_title(problem_title),
+        description=" ".join(problem_descriptions),
     )
 
 
@@ -84,10 +92,9 @@ def get_code_solutions(lesson: Lesson) -> list[CodeSolution]:
         if not code_str:
             continue
 
-        title = legalize_title(code_problem.title)
-        img_path = f"{IMGS_PATH}/{title}.png"
-
+        img_path = f"{IMGS_PATH}/{code_problem.title}.png"
         save_code_picture(img_path, code_str)
+
         code_solutions.append(
             CodeSolution(
                 title=code_problem.title,

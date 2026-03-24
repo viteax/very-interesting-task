@@ -1,4 +1,36 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
+
+
+class _BaseResponse(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
+
+class Course(BaseModel):
+    id: int
+    sections: list[int]
+
+
+class CoursesResponse(_BaseResponse):
+    courses: list[Course]
+
+
+class Section(BaseModel):
+    id: int
+    units: list[int]
+    title: str
+
+
+class SectionsResponse(_BaseResponse):
+    sections: list[Section]
+
+
+class Unit(BaseModel):
+    id: int
+    lesson: int
+
+
+class UnitsResponse(_BaseResponse):
+    units: list[Unit]
 
 
 class Lesson(BaseModel):
@@ -7,8 +39,7 @@ class Lesson(BaseModel):
     title: str
 
 
-class LessonResponse(BaseModel):
-    meta: dict
+class LessonResponse(_BaseResponse):
     lessons: list[Lesson]
 
 
@@ -22,18 +53,12 @@ class Step(BaseModel):
     block: Block
 
 
-class StepResponse(BaseModel):
-    meta: dict
+class StepResponse(_BaseResponse):
     steps: list[Step]
 
 
-class CodeProblem(BaseModel):
-    title: str
-    description: str
-
-
 class Reply(BaseModel):
-    code: str
+    code: str = ""
     language: str
 
 
@@ -43,43 +68,5 @@ class Submission(BaseModel):
     reply: Reply
 
 
-class SubmissionResponse(BaseModel):
-    meta: dict
+class SubmissionResponse(_BaseResponse):
     submissions: list[Submission]
-
-
-class CodeSolution(BaseModel):
-    title: str
-    description: str
-    img_path: str
-
-
-class Course(BaseModel):
-    id: int
-    sections: list[int]
-
-
-class CoursesResponse(BaseModel):
-    meta: dict
-    courses: list[Course]
-
-
-class Section(BaseModel):
-    id: int
-    units: list[int]
-    title: str
-
-
-class SectionsResponse(BaseModel):
-    meta: dict
-    sections: list[Section]
-
-
-class Unit(BaseModel):
-    id: int
-    lesson: int
-
-
-class UnitsResponse(BaseModel):
-    meta: dict
-    units: list[Unit]

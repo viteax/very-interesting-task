@@ -9,7 +9,7 @@ class Config:
     client_secret: str
 
 
-def load_config(path: str | None = None) -> Config:
+def load_config() -> Config:
     env = Env()
     env.read_env()
 

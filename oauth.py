@@ -30,6 +30,3 @@ def get_session() -> requests.Session:
     session.headers = {"Authorization": f"Bearer {token}"}
 
     return session
-
-    # docs = session.get(f"{api_url}/docs/api-docs")
-    # print(json.dumps(docs.json(), indent=2))

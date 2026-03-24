@@ -23,10 +23,8 @@ def main():
 
     course_id = PYTHON_COURSE_ID
     section_no = int(input("Введите номер раздела (номер лабы): "))
-    doc_name = ""
-    if not doc_name:
-        section = stepik.get_section(stepik.get_section_id(course_id, section_no))
-        doc_name = f"{section_no}-{section.title.strip().replace(' ', '-')}"
+    section = stepik.get_section(stepik.get_section_id(course_id, section_no))
+    doc_name = f"{section_no}-{section.title.strip().replace(' ', '-')}"
 
     current_no = 1
     heading_no = 1
@@ -38,7 +36,7 @@ def main():
 
     lessons = stepik.get_lessons(course_id, section_no)
     for lesson in lessons:
-        code_solutions = get_code_solutions(lesson)
+        code_solutions = get_code_solutions(lesson, stepik)
         if not code_solutions:
             logger.warning(f"No any solutions for «{lesson.title}»\n")
             continue

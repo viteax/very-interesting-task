@@ -4,7 +4,8 @@ from bs4 import BeautifulSoup
 from PIL import Image, ImageDraw, ImageFont
 
 from clients.stepik import StepikClient
-from models.stepik import CodeProblem, CodeSolution, Lesson
+from models.app import CodeProblem, CodeSolution
+from models.stepik import Lesson
 
 PADDING = 0
 FONT_SIZE = 64
@@ -74,9 +75,8 @@ def parse_block_text(html_text: str) -> CodeProblem | None:
     )
 
 
-def get_code_solutions(lesson: Lesson) -> list[CodeSolution]:
+def get_code_solutions(lesson: Lesson, stepik: StepikClient) -> list[CodeSolution]:
     logger.info(f"Getting code solutions «{lesson.title}»\n")
-    stepik = StepikClient()
 
     code_solutions = []
     for step_id in lesson.steps:
@@ -106,6 +106,8 @@ def get_code_solutions(lesson: Lesson) -> list[CodeSolution]:
 
 
 if __name__ == "__main__":
-    code_solutions = get_code_solutions(lesson_id=265122)
+    stepik = StepikClient()
+    lesson = stepik.get_lesson(265122)
+    code_solutions = get_code_solutions(lesson=lesson, stepik=StepikClient())
     print(*code_solutions, sep="\n\n")
     print(len(code_solutions))
